@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.keras
+*.h5
+*.json
+.env
+.DS_Store
+ingredients.json
