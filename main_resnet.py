@@ -6,7 +6,7 @@ from data.preprocessing import load_and_clean_metadata, prepare_labels
 from datasets.pipeline import make_dataset
 from models.resnet_model import build_model
 from training.train import train_model
-from evaluation.evaluate import run_evaluation, plot_history
+from evaluation.evaluate import run_evaluation, plot_history, run_advanced_evaluation
 from utils.save_labels import save_ingredients
 from sklearn.model_selection import train_test_split
 
@@ -46,6 +46,7 @@ def main():
     # 7. Model Evaluation & Visualization
     plot_history(history)
     run_evaluation(model, test_ds, mlb)
+    run_advanced_evaluation(model, test_ds, mlb)
     
     # 8. Save Label Definitions
     save_ingredients(mlb, 'ingredients.json')
