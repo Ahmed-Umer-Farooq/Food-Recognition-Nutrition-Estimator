@@ -30,7 +30,8 @@ food-nutrition-recognition/
 │   └── save_labels.py             # Exporting ingredient labels to JSON
 │
 ├── notebooks/
-│   └── FYP_Updated.ipynb          # Original notebook kept for reference
+│   ├── FYP_Updated.ipynb          # Original notebook kept for reference
+│   └── Model_Evaluation_FYP.ipynb # Advanced model evaluation suite notebook
 │
 ├── app.py                         # Streamlit web application interface
 ├── main_efficientnet.py           # Entry point for training EfficientNetB0 model
