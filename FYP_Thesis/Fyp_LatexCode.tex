@@ -1,0 +1,535 @@
+% Author: Omar Bin Samin
+% Lecturer
+% FYP Coordinator
+% Institute of Management Sciences, Peshawar, Pakistan.
+% Version: 4.1
+% Date: 4 July, 2024
+% Email: omar.samin@imsciences.edu.pk
+
+% Font Sizes
+
+%Command	   10pt	   11pt	      12pt
+%\tiny	         5	      6   	   6
+%\scriptsize     7	      8	       8
+%\footnotesize	 8	      9	      10
+%\small	         9	     10	      10.95
+%\normalsize	10	     10.95    12
+%\large	        12       12	      14.4
+%\Large     	14.4     14.4     17.28
+%\LARGE     	17.28	 17.28	  20.74
+%\huge	        20.74	 20.74	  24.88
+%\Huge	        24.88	 24.88	  24.88
+
+\documentclass[12pt, openany]{report}
+
+\renewcommand{\familydefault}{\rmdefault} %Font: Times New Roman
+\renewcommand{\bibname}{References}
+\usepackage[a4paper, left=40mm, right=20mm, top=20mm, bottom=20mm]{geometry}
+
+\setlength{\parindent}{1cm} %Para Identation: 1cm
+\setlength{\parskip}{6pt} %Para Spacing: 12pt
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[numbers]{natbib}
+\usepackage[nottoc]{tocbibind}
+\usepackage{sectsty}
+\chapterfont{\centering\large\bfseries} %Chapter Heading: 14pt and Bold
+
+\usepackage[titletoc]{appendix}
+\usepackage{titlesec}
+\titleformat*{\section}{\normalsize\bfseries} %Section Heading: 12pt and Bold
+\titleformat*{\subsection}{\normalsize\bfseries\itshape} %Sub-section Heading: 12pt and Italicized Bold
+
+\newcommand*{\BeginNoToc}{%
+  \addtocontents{toc}{%
+    \edef\protect\SavedTocDepth{\protect\the\protect\value{tocdepth}}%
+  }%
+  \addtocontents{toc}{%
+    \protect\setcounter{tocdepth}{-10}%
+  }%
+}
+\newcommand*{\EndNoToc}{%
+  \addtocontents{toc}{%
+    \protect\setcounter{tocdepth}{\protect\SavedTocDepth}%
+  }%
+}
+\usepackage{float}
+\begin{document}
+
+%//////////////////////////////////////////// Title Page Start ////////////////////////////////////////
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+       {\LARGE \textbf{Food Recognition \& Nutrition Estimator}}
+       \vspace{0.5cm}
+       
+       \begin{figure}[h]
+       \begin{center}             
+       \includegraphics[scale=0.8]{Logo.png} 
+       \end{center} 
+       \end{figure} 
+                    
+       \vspace{1.5cm}
+       \textbf{Authors}
+       
+       Ahmed Umer Farooq\\
+       Mubashir Hussain\\
+       Muhammad Hamza Khan
+       
+       \vspace{0.5cm}
+       \textbf{Supervisor: }Mr. Ijazullah
+       
+       \vfill
+       
+       Final Year Project Report submitted in partial fulfillment of the requirements for the Degree of BSDS (Hons.)           
+       \vspace{0.8cm}
+            
+       INSTITUTE OF MANAGEMENT SCIENCES, PESHAWAR \\
+       PAKISTAN\\~\\
+       Session: 2022-2026
+            
+   \end{center}
+\end{titlepage}
+%//////////////////////////////////////////// Title Page End //////////////////////////////////////////
+
+\pagenumbering{roman}
+
+\onehalfspacing % Set line spacing to 1.5
+%//////////////////////////////////////////// Certificate of Approval Start ///////////////////////////
+\chapter*{\centering Certificate of Approval}
+I, certify that I have read the report titled: \textbf {Food Recognition \& Nutrition Estimator}, by \textbf {Ahmed Umer Farooq, Mubashir Hussain and Muhammad Hamza Khan}, and in my opinion, this work meets the criteria for approving the report submitted in partial fulfillment of the requirements for BSDS (Hons.) at Institute of Management Sciences, Peshawar.
+\\~\\~\\~\\
+\begin{flushright}
+Supervisor: Mr.Ijazullah
+
+Lecturer
+\\~\\~\\
+Signature: $\rule{2.5cm}{0.15mm}$
+\\~\\~\\~\\
+Coordinator BSDS (Hons.): Dr. Bahar Ali
+
+Assistant Professor
+\\~\\~\\
+Signature: $\rule{2.5cm}{0.15mm}$
+\\~\\~\\~\\
+Coordinator FYP: Mr. Omar Bin Samin
+
+Lecturer
+\\~\\~\\
+Signature: $\rule{2.5cm}{0.15mm}$
+\end{flushright}    
+%//////////////////////////////////////////// Certificate of Approval End /////////////////////////////
+
+
+%//////////////////////////////////////////// Declaration Start ///////////////////////////////////////
+\chapter*{\centering Declaration}
+We, \textbf {Ahmed Umer Farooq, Mubashir Hussain and Muhammad Hamza Khan}, hereby declare that the Final Year Project Report titled: \textbf {Food Recognition \& Nutrition Estimator} submitted to FYP Coordinator and R\&DD by us is our own original work. We are aware of the fact that in case, our work is found to be plagiarized or not genuine, FYP Coordinator and R\&DD has the full authority to cancel our Final Year Project and We will be liable to penal action.
+\\~\\~\\~\\
+\begin{flushright}
+Ahmed Umer Farooq
+
+BSDS (Hons.)
+
+Session: 2022-2026
+\\~\\~\\~\\
+Mubashir Hussain
+
+BSDS (Hons.)
+
+Session: 2022-2026
+\\~\\~\\~\\
+Muhammad Hamza Khan
+
+BSDS (Hons.)
+
+Session: 2022-2026
+\end{flushright} 
+%//////////////////////////////////////////// Declaration End /////////////////////////////////////////
+
+
+%//////////////////////////////////////////// Dedication Start ///////////////////////////////////////
+\chapter*{\centering Dedication}
+\begin{center}
+We dedicate this Final Year Project to our parents and teachers, who have always supported and helped us in every aspect of life.
+\end{center}        
+%//////////////////////////////////////////// Dedication End /////////////////////////////////////////
+
+
+%//////////////////////////////////////////// Acknowledgement Start //////////////////////////////////
+\chapter*{\centering Acknowledgement}
+All the praise to Allah that induced the man with intelligence, knowledge, and wisdom. Peace and blessing of Allah be upon the Holy Prophet who exhort his followers to seek for knowledge from cradle to grave.
+
+Foremost, We would like to express our sincere gratitude to our supervisor Mr. Ijazullah for his continuous support, patience, motivation, enthusiasm, and immense knowledge. His guidance helped us throughout the project.
+Last, but not the least, We would like to thank our parents for supporting us morally and spiritually throughout our life. 
+ 
+%//////////////////////////////////////////// Acknowledgement End ////////////////////////////////////
+
+
+%//////////////////////////////////////////// Abstract Start /////////////////////////////////////////
+\chapter*{\centering Abstract}
+Lifestyles that are health conscience have been growing at a rapid rate, and this has aggravated the demand of proper nutrition monitoring equipment that is convenient and accurate. Old fashioned calorie counting models are manual in nature and thus time-consuming, likely to be subject to human error and also most of them encourage erratic dietary record keeping. To overcome these constraints, to identify the most common limitations in a paper, the current project introduces an AI-based Food Recognition and Nutrition Estimation system that is capable of automating the process of dietary tracking with the help of deep learning and computer vision. With a simple uploading of a food photo, the user is given an instant guesses of the type of food, and approximate information on nutritional content of the food which includes the calories, protein, fat, and carbohydrates.
+
+It uses transfer learning based on state-of-the-art Convolutional Neural Network (CNN) models like EfficientNet and ResNet and is used on standardized food dataset including Nutrition5k. These have models that are capable of recognising foods with a high accuracy through learning rich visual characteristics without compromising on efficiency and generalisation. The dietary values are positioned directly on the identified food category directly with confirmed ground-truth information, leading to the achievement of trustworthy macronutrient determination without having to engage in hand-based portion evaluation.
+
+The interface to be deployed is a user-friendly Streamlit dashboard and enables users to submit pictures and obtain real-time dietary information with model confidence levels. This system is designed at the assumption that it can be expected to have an accuracy of recognition at 85-95 and as such, it is feasible in the application of weight management, health and fitness monitoring.
+
+This project reflects that with the help of AI, food logging can be significantly decreased and accuracy and user interaction become higher. The proposed system helps to increase the availability of dietary management, sustainability, and accessibility to data on the target population because it automates one of the hardest parts of nutrition monitoring.
+%//////////////////////////////////////////// Abstract End //////////////////////////////////////////
+
+\tableofcontents{}
+\BeginNoToc 
+\listoffigures
+\listoftables
+\EndNoToc 
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+\section{Overview}
+In the modern health-aware society, the process of nutritional tracking of consumption is getting more and more significant to the people who seek to control their weight, keep an eye on the chronic diseases like diabetes, or just adhere to the unbalanced diet. The existing systems of food logging that have been tried and used by people are conventionally looking through vast databases to find the food items, or even approximating the amount of portions which is not only laborious but also subject to serious mistakes. Studies have always measured about the average of 20-50 per cent when compared to the actual figures when it comes to recording calories consumed by an individual and thus these research methods are not very reliable at all when it comes to tracking a proper diet of an individual. Such a huge error margin discredits the usefulness of popular weight management apps and frequently causes its users to become frustrated and give up any healthy tracking routine.
+
+The new opportunities of automation and recognition of food and nutrition estimation have been made by the introduction of artificial intelligence and computer vision technologies. Convolutional Neural Networks (CNNs) have proven to be very useful in image classification tasks with capabilities of human-level or even superhuman functionality in several areas [1], [3]. Annually, these deep learning models can be used to scan pictures of food and recognize specific food stuffs, when given as input and when used in food recognition, the method could transform the way individuals follow their meals. Users could no longer spend several minutes manually recording every meal, and they could simply scan a picture and be provided with nutritional information.
+
+The concept of our project, which is titled Food Recognition and Nutrition Estimator, is to use these technological features to come up with a realistic solution to automated dietary monitoring. We suggest implementing a CNN-based system that would identify various kinds of food against pictures and would provide exact nutrition information in terms of calories, protein, fat and carbohydrates. Transfer learning will be used in the system as the basis of the models pretrained by the efficacy of other models such as EfficientNet or ResNet models which have already been trained to identify general visual features of millions of images [5], [6]. With a slight additional refinement on a food image dataset which has been specialized (with the exception of the Nutrition5k dataset as a more special dataset), we can reach peanut accuracy in terms of food recognition, whereas training a model directly off thescratch has performance comparable to the most coarse fit, at the cost of only a small amount of training time and computational resources.
+
+Our system will be applied in practice in the form of an interactive web application based on Streamlit, and its user-friendliness is a high priority requirement. The interface will enable users to add photographs of meals and get immediate suggestions as to the type of food and detailed nutritional messages. The strategy will substantially decrease the obstacle to regular tracking of diet, nutrition tracking will be made accessible to a larger number of users such as busy professionals, people interested in fitness or those who need to keep their conditions under control. Studies conducted have indicated that systems of food recognition that are run on smart phones can attain a degree of accuracy ranging between 85-95\% [1], [2] thus being a viable substitute to the systems of food logging which are manual.
+
+In addition to the scope of personal health management, the automated food recognition systems do have further implication on the research of health of the population, restaurant menu and dietary recommendation system. The technology might be able to empower large-scale dietary surveys with a superior quality of data collection, restaurants to supply nutritional information that has been validated and assist health employees in tracking eating habits of patients. With deeper learning and increased food image datasets becoming more balanced [4], all that can be done is to improve the accuracy and reliability of these systems, and in the near future, it is a possibility to eliminate the manual food logging process.
+
+       
+\section{Project Motivation}
+This project is motivated by a bedrock issue in contemporary health management the fact that we are aware of what we ought to eat in general, yet we end up tracking what we in fact eat. Although the general agreement is that people are aware of the significance of balanced nutrition, the feasible hurdle of tracking daily food consumption is still a major problem facing the adoption of healthy eating patterns. Despite their vast food databases, traditional food logging programs also have the disadvantages of having the user search through large quantities of foods, make individual judgement on portion size, and enter multiple data points to maintain one meal. This cumulative activity usually breaks up consistent tracking and most users drop their dieting efforts in weeks or months after starting to track their diets.
+
+The strength of image-based solution is that it is straightforward and fast. Think of the time saving that can be achieved by comparing the old method that required three to five minutes of time to search each food item, choosing quantities, and recording them to the short three seconds taken by taking a photo. Such radical user effort saving overcomes one of the main arguments that individuals give when abandoning food tracking: it is too inconveniencing and time consuming in their everyday lives. Since AI-based food recognition system helps to make this process almost effortless, the most significant source of friction that the lack of success in adherence to dietary monitoring, which is desired in the long run, is eliminated.
+
+Furthermore, another weakness very critical in manual logging is also handled by the accuracy advantages provided by automated recognition systems. Human perception of the size of portions and remembering the ingredients are notoriously inaccurate, and the systematic underreporting of the high-energy food and the overestimation of the healthy foods have been reported in the studies. With accurate nutritional information, the on-label images of thousands of foods, an AI system can be more consistent and objective in its analysis. Although not foolproof, these systems remove the psychological bias and the memory errors that result with self-reported eating information.
+
+Its applications in practice are not limited to personal fitness tracking. Individuals with diabetes are to be vigilant of the quantity of carbohydrates they take, those with food allergies seek finer details on the ingredient list, and those with the heart issue are to be sensitive to the amount of fat they consume. These groups, in particular, need correct and easy monitoring of their diets not only to be convenient, but medically necessary. One photo might give the detailed digestion of nutritional content it requires to make better health choices across the day, which may alter the community health care and quality of life.
+
+Lastly, we are sure that the increased availability of nutrition tracking can have a more significant effect on the population health on a wider level. With the assistance of technology that facilitates the process of maintaining healthy eating, a greater number of individuals can be able to attain their wellness objectives. This project is a step toward the future where technology will allow effortlessly intertwining with everyday life and helping in obtaining improved health results, which will democratize access to nutritional awareness, which has turned out to be time-consuming and has demanded commitment time so far.
+
+
+\section{Project Vision}
+We envision developing an intelligent user-friendly artificial intelligence to make the process of interacting with nutrition information a different experience in the lives of people. Our vision is to have a system in which tracking of food intake becomes as simple and automatic as taking a photograph and by doing so we take away the obstacles that have long existed and hindered food tracking. The final idea is to ensure that proper nutrition knowledge is readily available as quickly as the touch of a smartphone or computer regardless of the level of advancement or prior experience in the nutrition databases.
+
+Our goal is to come up with a solution that would not only identify the food items with high accuracy, but it would also deliver valuable nutritional information, which would enable customers to make informed dietary decisions. Using the latest deep learning algorithms and a simple user-friendly interface, we aim to introduce a new layer of integrity between the high-level artificial intelligence features and their practical uses in real-life situations. We are not just focusing on developing a working prototype but we will show how the power of artificial intelligence can be utilized to engage with the health issues of the real world and how it can enhance the relationship of people in relation to food and nutrition monitoring.
+
+
+\section{Scope}
+With this project, we have a scope that is well spelled out to make sure that we come up with a functional and reliable system within the limits of the final year project time and resources. We will mostly concentrate on the issue of constructing a CNN-based food recognition model but in the special application to Nutrition5k dataset [9], which consists of high-quality food items with a corresponding nutritional content. As a part of transfer learning, we will adopt either EfficientNet [6] or ResNet [5] architecture by use of their trained weights on ImageNet and take advantage of their speed to learn it faster and offer better model performance.
+
+The system will be configured to forecast four important nutritional elements, which include the total calorie number, the quantity of fat, the quantity of carbohydrate and the quantity of protein. These macronutrients present the most popular form of dietary information and are an overall picture of the nutritional profile of a meal. Our model will be superimposing identified food classes onto the related nutritional values based upon the organized information of the Nutrition5k dataset. In order to make the technology more accessible to the end users, we will establish an interactive web application with the help of the Streamlit system, which is based on Python and enables us to build a data-driven application quickly. This interface will allow users to post food photographs and get instant predictions with confidence scores that share the level of confidence this model is sure of its classification.
+
+It is, however, also important to make it clear what will be out of scope of our project. We are not going to introduce any portion size or weight detection features: This would either involve more sophisticated algorithms, like depth estimation, 3D reconstruction, or special sensors, like LiDAR or stereo cameras. These solutions involve a lot of technical complexity and would need hardware not normally found on regular smartphones. Although portion size is clearly significant when it comes to measurement of calories consumed, considering this issue would push the project beyond reasonable limits in an undergraduate final year project.
+
+We will also not undertake the task of preparing complicated mixed or multi-paired dishes including curries, stir-fries, layered sandwiches or multi-component dishes. Such products pose significant classification problems since they demand the model to be able to detect and isolate single ingredient in a nearly-singular image, and restock their nutritional content appropriately. Most food image datasets, the Nutrition5k being no exception, are predominated with food images that depict single-ingredient or easily distinguishable food stuff. This would involve the extra data to support the complex mixed dishes, more advanced methods of image segmentation, and possibly multi-label classification methods, which are beyond the scope of our project at this stage.
+
+\section{Glossary}
+To maintain the clarity throughout the document, we define some important technical terms to be used extensively in the description of our methodology and implementation.
+
+{\textbf{Convolutional Neural Network (CNN)}}: This one is a deep learning network architecture that supports grid-like data, e.g., an image. To obtain hierarchical methods in visual information, CNNs apply mathematical operations, known as convolutions, which detect simpler forms at the early levels and increasingly more complex in the later ones, objects, and concepts. CNNs have the added advantage of being able to preserve dots in an image that are spatially related, as compared to traditional neural networks, which tend to be useful in image recognition tasks.
+
+Transfer Learning Transfer learning is a machine learning environment in which a model is developed to address a first task and subsequently can be re-used as the initial model to address a second task of similar interest. We are going to use the models that were trained on ImageNet, a large repository of the millions of general-purpose images, and specialize them to food recognition in our context. This method then enables us to exploit low-level visual His own model has already learned (edges, textures, shapes) and so, it needs less training data and time before it can perform well on our target food classification problem.
+
+{\textbf{EfficientNet:}} Google Research created a series of CNN models that expand network depth, width, and resolution in a systematic way: scaling with a compound coefficient [6]. The models of EfficientNet are both as accurate as state-of-the-art and are much more parameter-efficient than the existing architecture, i.e. use fewer computational resources both in training and inference without reducing the performance. In our project, we can adopt EfficientNetB0 or EfficientNetB1 that are the optimized versions that fit our computational resources.
+
+
+
+
+
+\section{Objectives}
+\begin{itemize}
+    \item Create an artificial intelligence system that will classify food based on pictures and detect food items correctly.
+    \item Calculate nutrition and calorie content by combining the system with reliable nutrition databases.
+    \item Test the model on publicly available food image datasets to evaluate accuracy and performance.
+    \item Provide users with quick and convenient nutritional information through an interactive application interface.
+\end{itemize}
+
+
+
+\section{Tools}
+The project will implicate applying the collection of software programs, libraries, and frameworks that will comprise sufficient infrastructure in data processing, model development, training, estimation, deployment, and documentations. This is elaborated in the subsections below which elaborate each of the tools used, and the reason why they were selected in the project.
+\subsection{LaTeX}
+The FYP document, e.g. the detailed report, the proposal and the final thesis are written in LaTeX. It is capable of better typesetting mathematical equations, tables, figures and reference list that enable it to appear professional and in academic terms. LaTeX also finds application in most academic and research institutions and is hence preferable application in case of production of formal documentation of a project.
+\subsection{Python}
+The primary code language in this project is Python. It has a readable syntax, supports enormous libraries, and is actively used by most machine learning and data science fields. Python is also suitable to the model architecture prototyping and training strategy experimenting process. Moreover, the fact that it could be employed with the local systems as well as with the cloud-based ones (e.g. Google Colab) provides a range of possibilities throughout the development process.
+\subsection{TensorFlow and Keras}
+The main deep learning engine that was utilized in the Convolutional Neural Network (CNN), which is Google-based, is TensorFlow. It has an advanced API, Keras, that simplifies the neural network model construction, training and evaluation process.
+
+Using Keras Applications module, we are able to utilize pre-trained architectures, such as EfficientNet and ResNet which allows us to transfer learning to get a better performance with a reduced training time. The community support that will be available in TensorFlow will be standardized in documentation and provision which will make it reliable throughout the development time.
+\subsection{Efficientnet and Resnet Architectures}\
+EfficientNet and ResNet are the two backbone architectures that were experimented in the project.
+
+EfficientNet gives high parameter efficiency in terms of compound scaling where a high level of accuracy is achieved using fewer computational resources. This would be useful particularly with hardware limitation in the project.
+
+ResNet is a deep-rooted model which has residual connections and it is known to alleviate the vanishing gradient problem and produce more expressive models.
+The experimentation between the two architectures will focus on determining which one among them is more viable to apply in food recognition task as far as accuracy, speed of inference and resources occupied is concerned.
+\subsection{OpenCV}
+Image manipulation operations, including size control, image cropping, color space, and other geometric operations are processed using OpenCV. All these functions ensure that the input images are made consistent before they are presented to the CNN resulting in the same performance on the whole dataset.
+\subsection{PIL (Python Imaging Library)}
+The OpenCV functionality is referred to as PIL and provides a simple way of opening, editing, converting and saving images. It can accommodate a high range of image formats and therefore would be in a position to accommodate user uploaded images once the application is put in place.
+\subsection{NumPy}
+NumPy is a mathematical library of mathematical operations and useful manipulation of multidimensional arrays. It plays a vital role in working with the image data, mathematical operations, and the correlation of preprocessing outcomes to the training process using the assistance of TensorFlow tensors.
+\subsection{ Pandas}
+The structured data is run using Pandas, including the nutritional metadata of the pictures. It has a prosperous loading, cleaning, converging, and examination of CSV files in its DataFrame format. This enables the visual predictions which are made by the model to be combined with nutritional information which is smoothly integrated.
+\subsection{Matplotlib}
+The development of training and the results of the model is seen with the help of Matplotlib. It has known features such as accuracy graphs and loss curves and sample prediction plots. The products are used to debug and test model behavior.
+\subsection{Seaborn}
+Seaborn is a Matplotlib extension, which focuses on the creation of good statistical plots. It may be utilized in creation of heatmaps, confusion matrices, and distribution plots that can be explored to observe how things work and assess the quality of the model.
+\subsection{Streamlit}
+The system that is adopted to develop the interactive web application in the food recognition system is streamlit. It allows the translation of Python code into an operating interface without the need of the conventional web development expertise. All the capabilities such as uploading files, displaying pictures, and the consequence of the prediction can be presented efficiently and enable the quick development of the application that would be user friendly.
+\subsection{Google Colab}
+Google Colab is the cloud platform whose free access of the GPUs is usually NVIDIA Tesla T4 or P100. This does a lot to provide fast-track training as opposed to CPU-only environments. Colab has also been built to integrate well with Google drive and machines are pre-built with machine learning libraries, which reduces time spent on configuring and dependency issues. The checkpointing methods stop the failure of progress inside time limits of a session.
+
+
+
+
+
+
+
+\chapter{Background Study}
+However, tracking daily food intakes is a key to living a healthy lifestyle, a successful management of weight and prevention of nutrition-related diseases. Nevertheless, the conventional nutritional-monitoring procedures, including searching in real-life by the food types, estimating the portions size, and counting the calories, are rather inconvenient, time-consuming, and subjected to gross inaccuracies. These methods are greatly dependent on the user memory and consistency thus compromising on the accuracy and consistency of the data which makes many people to give up the practice completely. The increasing trend in the global health consciousness is causing a strong demand of quicker (more convenient), and confirmed nutrition-tracking technologies. The shortcomings of manual recording raise the issue of the necessity of automated systems that decrease human interaction but increase the accuracy of dietary measurements.
+
+Recognition of foods using images has become one potent solution in response to development of artificial intelligence, especially computer vision and deep learning. Convolutional Neural Networks (CNNs) have the ability to analyze images of food, along with highlighting the type of food, and isolating details of color, shape, and texture. In the case of transfer learning and pretrained models such as ResNet and EfficientNet, user high classification could be made with insufficient data specific to the domain. Nutrition5k nutrition-specific datasets, and others including nourish, offer an opportunity to model visual on a specific diet by mapping nutritional values measured in laboratory conditions and nutritional risks that can be predicted. By incorporating these functions in mobile apps people can get nutritional information at a touch of a button by just uploading a picture, minimizing logging errors and enhancing long-term interaction. In addition to personal applications, the technology has been useful to healthcare, fitness, and the food industry since it aids in dietary monitoring of patients, coach, and in the process of research to help the researcher obtain accurate dietary information. The Food Recognition \& Nutrition Estimator project is an attempt to take advantage of these developments with regard to providing users with a quick, convenient, and useful opportunity to have better and healthier eating habits.
+
+\section{Related Work}
+\subsection{Traditional Methods}
+In the run up to the deep learning revolution that redefined computer vision, researchers in their bid to construct automated food recognition systems used traditional image processing and machine learning activities. Their limitations were substantial and eventually led to the adoption of a shift towards neural networkbased methods, although these early methods, despite being novel in their time, did possess their limitations.
+
+Conventional food recognition systems generally used hand-crafted features as a representation of images mathematically. Scale-Invariant Feature Transform (SIFT) descriptors, where local features in images are determined and described in terms of gradient orientation distributions around important points, was also frequently used. The SIFT features are also resistant to the variation in scale, rotation and illumination and thus the features are attractive in food recognition where the same dish can be captured in different angles or different lighting setups [4].
+Nonetheless, the development of these features could only be done with much expert knowledge on fields and researchers needed to make the decision on which of the visual characteristics play the most important role in differentiating the various foods manually.
+
+Color histograms and texture descriptors were also the other common conventional methods. Color histograms are the dispersion of colors within an image, which are characteristic of specific foods the color distribution of oranges are mostly of orange color, and broccoli are mostly represented by a color distribution of green color. Histogram of Oriented Gradients (HOG) was a texture representation format that was obtained with the use of the distribution of edge direction in small image areas. The multi-feature representation of combining several types of features, including color, texture and shape descriptors, would be frequently used as researchers would hope that this multi-feature representation would share several adequate pieces of information needed to differentiate the food types [4].
+
+After extracting features, conventional machine learning classifiers such as Support Vector Machines (SVM), Random Forests or k-Nearest Neighbors would be trained to learn how to associate these features representations with food categories. Although these techniques were at least partially effective on small-scale challenges of limited food categories, they had a hard time dealing with the variety and challenges of realistic food recognition. Even on curated datasets the accuracy rates were still found to be between 50-70\% which is certainly not anywhere near what would be demanded in the real world [3].
+
+The inherent weakness of features created by hand was that they could not learn automatically what visual patterns are the most important in recognizing food. The researchers needed to make educated approximations over what features to extract and the features could simply not be able to detect the finer visual differences of similar looking foods or the broad difference of foods of the same kind as they are differently prepared or presented or under different lighting situations when photographed. With bigger and more varied datasets, the drawbacks of the previous methods became more obvious, and the deep learning revolution established itself[4].
+
+Deep learning and, in particular, Convolutional Neural Networks redefining the notion of food recognition, since systems with such everything-on-a-single-image-pixel compute their hierarchical visual features straight off of raw pixel values. This paradigm change eliminated manual feature engineering and significantly increased feature recognition accuracy between different types of foods.
+
+The CNNs breakthrough came in 2012 with AlexNet winning ImageNet large scale visual recognition challenge by far showing that deep neural networks were able to compete with all classical methods. The architecture of AlexNet created major developments such as the ReLU activation functions, dropout regularization, and using GPUs to run training that would form the trend in all further CNN architectures. After AlexNet, the architecture of VGG proved that the depth of networks was a key performance factor, and very deep networks were used with small convolutional 3x3 filters repeated many times. The ability of CNNs to acquire more abstract visual representations, such as simple edges and colors at lower levels to complex object parts and categories at higher ones, was demonstrated by these first architectures [3].
+
+ResNet [5] solved a serious weakness that arose when researchers tried to construct even larger networks. Deep neural networks with very deep networks experienced vanishing gradients during training, in which error messages were smaller than is efficient to modify weights in early layers. ResNet also added skip connections which would admit gradients to flow through the network, making it possible to train networks with more than 100 layers. These redundant links cause shortcut paths that enable the information flow to be maintained, and ResNet architectures are genuinely effective to perform image classification. The number of layers (50 then 101) made ResNet50 and ResNet101 they were considered to be the standard benchmarks by which a comparison was drawn between different architectures, which would persistently lead to the highest performance in ImageNet and other similar tasks.
+
+EfficientNet [6] was another significant contribution as it tried to find a systematic way of trying to optimally scale CNNs. The architectures used in the past had an arbitrary scaling of networks through adding more levels to networks; or wider networks or networks with finer resolutions without a defined method. Compound scaling was introduced by EfficientNet and it simultaneously scales the network in terms of depth, width, and weight of the input with a specific ratio that is identified by means of neural architecture search. The model resulted in a series of models (EfficientNetB0 up to EfficientNetB7) that are more accurate than their predecessors, have fewer parameters, and run on less computational power. EfficientNet is especially appealing to resource-constrained applications such as mobile food recognition apps [6].
+
+These more complex CNN designs have demonstrated great performance in food recognition with the most recent studies achieving readings of 85-95\% on suitably prepared food data sets [1], [2]. It has been demonstrated that transfer learning, i.e. fine-tuning the models pre-trained on ImageNet with food pictures, accelerates training considerably and yields better performance than the results of training from scratch [7], [8]. Models trained on ImageNetolograms visual features obtain general images show general-to-specific transfers when applied to food recognition problems; the basic visual features informed by object edges, texture, object parts etc. are domain-independent.
+
+The last few years have seen the study of different dimensions of CNN based food recognition such as optimum training methods, the use of data augmentation, as well as, ensemble methods that combine results of multiple models. Other researches have explored attention processes that assist the model to concentrate on the most pertinent areas of food images which may enhance the accuracy of challenging items whereby more than a food item occupies one photograph [1]. It has been studied by other people the results of CNNs on other cuisines and various food preparations based on cultural specifics and found possible biasness of these models, as well as suggested a way to address this issue [3].
+
+\subsection{Food Datasets}
+Densely annotated collections of food images on a large scale have played a pivotal role in the development of the research in food recognition. The training data these datasets contain has the capability of training a deep learning model to learn a wide variety of visual patterns in a large number of classes of food, as well as acting as a standardized metric of comparison amongst the various methods.
+
+One of the most used benchmark data in food recognition research is Food-101. It was released in 2014 and include 101,000 images in 101 categories of food with 1,000 images of each type. It consists of 750 training images and 250 test images per class, where the selection was made respectively with attention to the common foods of the world with different cuisines and different ways of making them. The pictures of Food-101 were taken out of the websites that specialize in food photography and intentionally incorporate difficult food photos with different lighting, angles, and backgrounds to more closely fit the conditions of the real world. Although effective in their role of catalyzing early research, Food-101 does not offer specific nutritional data, which makes it unproductive to such projects of our scope in trying to estimate nutritional data [3].
+
+A major breakthrough is that Nutrition5k dataset [9] created by Google researchers explicitly maps a visual image of food to nutrition analysis. Compared to Food-101 that only displays category names, Nutrition5k also displays detailed information on the food by showing the calorie and macronutrient content (protein, fat, carbohydrates) and micronutrients content of each food item. All the foods in the data collection were professionally cooked, photographed at various angles and chemically examined to get the actual nutritional content of the food. This strict methodology will take into account the ground-truth nutritional values, and will guarantee the fitness of Nutrition5k to be used as a model to predict not only the type of food in the model but also the nutritional content. The images in the dataset have been taken in controlled lighting environments and with a similar background, and this allows easy to see the food items. In case of our project, the mixture of visual and nutrition data offered by Nutrition5k perfectly matches our intention to have a system that offers food identification and nutritional approximations [9].
+
+FoodX-251 is also the most varied food dataset to date, providing 251 food items as the representative of an internationally diverse selected set of dishes, expanding the range of food recognition studies. Its focus on international cuisine representation eliminates the issue of cultural biasness in the recognition food system where most foods are western. The increased number of category in this dataset is an opportunity as well as a challenge: on the one hand, it is possible to recognize a larger set of foods, on the other hand, the number of classes is larger and complicates the task of classification, which may decrease the overall accuracy of this dataset than smaller ones. FoodX-251 has been used in studies on cross-cultural food recognition, and in creating systems which are supposed to be used worldwide.
+
+Although such datasets have progress side, there are still a number of issues in food image data. Visual ambiguity is an issue that cannot go away, similar foods may be hard to differentiate even in humans and minor difference in cooking or food presentation can make a big difference in the appearance of a food although they are still classified in the same group [3]. The difference in lights influences the difference in color and textures of the photographs and a similar dish would look very different when exposed to natural daylight and artificial indoor light. Another source of variation is the camera angles and the distance; overhead shots, sides-views, close-ups of the same piece of food provide recognition models with different visual information. Stuff in the background, dishes, cutlery, and placemats, may distract the models and/or cover parts of the food. These limitations spark continued studies of higher quality feature learning, methods of data augmentation, and architectures that are able to tolerate variant features in the world.
+
+\subsection{People Estimation of nutrition}
+Whereas food recognition determines the type of food shown in an image, nutrition estimation determines the caloric and nutritional content which is a more complex task which involves moving beyond mere classification. Various methods of the estimation of nutritional methods have been studied, each having its advantages and disadvantages.
+
+The simplest method of nutrition estimation is estimating food classes on the map against known nutritional databases like the USDA National Nutrient Database. After a CNN finds a food item the system will search common nutritional values that belong to that type of food and relay it to the user. This classification look up method is computationally rapid, and it is based on already established and well edited nutritional data. Nonetheless, it makes very few assumptions that the nutritional profile of all members of a single category of foods is the same, which is not always the case. Two cookies of the same type with a big one and a small one have completely different caloric value. On the same note, a food preparation method influences its nutritional content; fried chicken has more calories and fat compared to that made by grilling, all the same may be prepared by the same method as chicken. This mapping strategy is aided in the Nutrition5k dataset [9] which takes into consideration standardized nutrition measurements of each category of food which the dataset contains; this minimizes the variation within categories.
+
+Regression models, as opposed to classification-then-lookup, have been studied as a direct method of prediction of a certain number of calories. In this strategy, a CNN is trained to predict a smooth numerical figure of the estimated calories as a direct associate of the image and nutrition estimation is a regression problem and no longer a classification problem [10]. This is an end-to-end learning methodology which in theory enables the model to consider visual indicators associated with portion size, mode of preparation and other variables attributing to caloric value. Nevertheless, the problem of regression-based nutrition estimation has been found not easy due to the noisy and intricate nature of the correlation between the visual appearance and the number of calories. Two food products may have very similar, but varying caloric densities, or conversely, may have very different but similar calories. Direct regression research outcomes have indicated great disparity on prediction errors whereby the model at times grossly over or undereats calories [10].
+
+Volume estimation is another more advanced method which tries to estimate the size and volume of food in the image in three-dimensional terms as well as the amount of food. When the system is able to determine the nature of the food, as well as its quantity, the nutritional calculations can be much closer. Nevertheless, the problem of volume estimation based on the single 2D picture is ill-posed in essence; due to numerous 3D settings, the same 2D picture can be produced, and there can be no standard volume determination without extra data. Certain studies have investigated the use of depth sensors, pairs of stereo cameras, or the need of customers to place known-size reference objects in photographs [10]. Though these methods can enhance the accuracy of the volume estimates, it also comes with a set of practitioner complexities that can decrease its adoption by the user. Not all smartphones have depth sensors, and stereo images cannot be done without a dedicated dual-camera system and more complex processing, and additional processes of requesting users to bring reference items introduce friction to what otherwise ought to be a consumer-friendly process.
+
+Some recent studies have explored the multi-task learning systems, which execute both food recognition and nutrition estimation simultaneously and exchange visualization between the two tasks. The hypothesis is that characteristics that help in classifying types of food may also be instructive in predicting food nutritional value, and concomitant training may enhance the two endeavors. Findings are inconclusive with some studies showing small gains compared to single-task methods and some showing only small gains [3]. Nutrition estimation has always been a problem even using the most advanced techniques, and studies have found that estimates are often within 20-30 percent of true values in the best case, and are often worse than that by a wide margin [11]. This is due to the inherent challenge of extrapolating nutritional value based on visual image alone particularly without proper portion size information.
+
+\subsection{Existing Apps and Systems}
+Market indicators of the food tracking application indicate the need to have automated solutions and the existing constraints of the technologies today. A number of applications have tried to add food recognition features in different success levels.
+
+MyFitnessPal is one of the most popular nutrition tracking sites, and has millions of active users across the globe. Nonetheless, the MyFitnessPal application uses manual data entry of the food consumed and depends mostly on a large database containing more than 11 million foods and manually typing in the quantities consumed. Though the application has barcode scanning on packaged foods, its meal logging system is essentially manual and time consuming. Customers often complain of irritation as they go through the tiresome experience of scrolling through the database, approximating the portion size, and typing in data individually per meal constituent. Nevertheless, the full database of MyFitnessPal along with the number of established users introduces it as a player in the niche of nutrition tracking.
+
+Calorie Mama started AI-controlled food recognition and tried to streamline the logging with the help of images. Users are able to capture the photographs of their meals and the application recognizes the foods and approximates the nutrients through the use of computer vision. Although novel, first iterations of these AI systems were unable to match accuracy in even less frequently found foods, combined dishes, or even photographs against a dark background [2]. The users complained that the system occasionally failed to recognize foods or gave extremely wrong calorie counts, cabbing trust in the technology. The application also imposes reviews and frequent manual corrections on the predictions of the AI, thus consuming less time than the complete manual entries. However, Calorie Mama was a significant move into the automated food tracking system and showed that consumers were willing to invest in nutrition logging in the form of photos.
+
+Lose It! has a more of a hybrid solution to its service by combining both manual database search and food recognition through the use of a photograph. One can either log foods or take photos of their meals. The AI of the application tries to detect foods in a photo and give an estimated nutritional value but expressly states that users should check and correct predictions before complete entries [2]. The design recognizes the weaknesses in accuracy recognition of the existing food recognition technology even though it does provide convenience to users. Lose It! is a company that has over the years spent a lot of money in enhancing its image recognition, by using huge input of generated user data to refine its models. Based on user feedback, the photo recognition tool is perceived to be helpful, though not always accurate, and the accuracy varies significantly depending on the type of food and the image quality generally [3].
+
+These commercial applications indicate that overall food recognition systems may face a number of common difficulties in the real world. Precision is the main issue: consumers will lose trust in AI-based products that often fail, although such products may help save time. The wide range of types of foods in various cuisines, preparing strategies, and other variations in each region is an unbelievable task to classify, and the existing system cannot cover them all [2]. The estimation of portion size is still largely unsolved in consumer applications, much of the systems either do not attempt it at all or make approximate estimates using a set and supposedly standard servings. The design of the user interface can not be dismissed; no matter what a great food recognition is, it will be useless when the application is hard to navigate or use. Lastly, the privacy concerns are also becoming a central issue because users are now becoming conscious of the possibilities of using or disclosing their eating information [3].
+
+\subsection{Recent Advances}
+The area of automated food recognition has advanced at a rather rapid pace and researchers are experimenting with new architectures, optimization strategies and application settings that extend beyond the conventional CNN models.
+
+Vision Transformers (ViTs) are a potential CNNs alternative that can be utilized to solve image recognition tasks. As opposed to the CNNs processing images using hierarchical convolutional layers, Vision Transformers interpret images as sequences of patches and use self-attention systems that can modeling interactions among different parts. Initial findings indicate that Vision Transformers can be as strong or stronger than CNN at recognizing food with appropriate data, and can have more ability to understand a long-range dependency in an image. But Vision Transformers usually need more extensive datasets to be trained and more efficiency to train than CNNs, so their application to domain tasks such as food recognition is not yet widespread.
+
+Mobile optimization has gained a new implication with food recognition systems taking a new direction where research prototypes are eliminated and practical uses are integrated in smartphones [2]. Embarkation on lightweight model architectures and compression models that allow acceptable accuracy with a drastically reduced model size and inference time are underway. MobileNet models apply depthwise convolutions that are separable, and therefore, less computationally expensive thus can be applied on-device. Quantization methods are methods to encode 32-bit model weights and activations into lower precision formats such as 8-bit integers, substantially reducing model sizes as well as increasing inference in models with much less accuracy drop. The optimizations allow food recognition to run on smartphones using purely local code, and do not need cloud connectivity, enhancing user privacy and decreasing latency [11].
+
+The real-time processing has risen to an extent that some systems can detect food items in video channels as opposed to only being able to detect still images. This makes it possible to have apps such as augmented reality nutrition labels, which display caloric data on food when the user points their cameras at foods. The modern smartphones with edge computing platforms and dedicated AI accelerators allow making such real time recognition more and more possible [2]. Video-based recognition, however, presents new problems such as motion blur, high-frequency changes of lights and the computational complexity of performing many frames per second [11].
+
+The privacy consideration has led to the study of federated learning methods of food recognition, in which the models are trained on numerous devices without consolidating the user data. The model training does not take place in the cloud on users seen as posting photos of their food, but on the user devices and the model updates are sent to a central server. This would guard user privacy as the data on specific diets will never leave the device, and still, the system can be enhanced as it learns alongside other users as time progresses. The concept of federated learning brings its technical challenges of communication efficiency, the necessity of managing non-uniform data distributions across devices as well as the convergence of the model, yet it is only a promising direction of privacy-preserving food recognition systems.
+
+The combination of the use of deep learning with applications in agriculture and food processing has presented a new point of view on enhancing food quality, safety, and supply chain efficiency [12]. Commercial kitchens are installing computer vision to check the quality of produce, track food spoilage, and pick ingredients as well as track food preparation lines on the floor. These industrial applications need not necessarily have the same requirements as consumer food recognition systems, including a very high degree of accuracy, images of a conveyor belt to be processed in real time, or detection of subtle defects that cannot be discerned by human eyes. The techniques that have been evolved in the analysis of industrial foods are usually collected in the consumer one and the other way round, making a fruitful interaction between the fields [12].
+
+\section{Limitations}
+Although the food recognition and nutrition estimation research has made tremendous advancements, there are still several limitations, which influence the accuracy, reliability, and the general practical applicability of the existing systems. It is necessary to know about these constraints to make realistic expectations and to know areas where our project can play a role.
+
+Accuracy degradation facing visionally related foods is also one of the most consistent challenges. Numerous different food products have the same color, texture, and shape, and they can hardly be differentiated even by the complex deep learning models. As an example, vanilla ice cream, yogurt, and sour cream may appear almost the same in the photos, although, they have varied nutritional labels. In the same vein, recognition systems are very much likely to err when applying several particularly diverse types of meat, several different cheese varieties, or several different green vegetables [3], [11]. This is aggravated when food is photographed at specific angles or in small lighting whereby the features of the foods can no longer be differentiated. Although a human observer may identify correctly using these contextual clues or inherent knowledge, the modern AI technologies are unable to cope with such problematic situations.
+
+Another major constraint to the generalizability of food recognition models is that of dataset bias. Most of the publicly available food data would also be majorly Western foods, with very few Asian, African, Middle East, and Latin American foods represented [4]. A model that is largely trained on Western dishes is not likely to be highly effective when shown novel cuisines, as it will not identify or falsely recognize dishes that belong to the underrepresented cultures. This discrimination is not confined to the kind of food that is served but also in the preparation and presentation of the foods. The appearance of American-style sushi is not similar to the look of the sushi in Japan and the difference between regional cuisines can be enormous. It takes different culturally representative datasets that are hard to find in order to develop really global food recognition systems.
+
+The problem of estimating the portion size is essential when working on single 2D analysis of images [10]. The absence of the correct portion size information is not permitting nutrition estimation to make the correct estimates, only approximate ones, which should be predicted as per the assumed standard delivering portions. The fact that a sandwich is a sandwich does not indicate whether it is a wibbly-wobly tea sandwich or it is a foot-long sub but their caloric value is a whole order of magnitude apart. Although other research has investigated depth sensing solutions or reference object solutions, these are more complicated to implement and some with specialized hardware or inconvenience actions of the user that limit usability. Lack of proper ratio of determining portions limits the accuracy of the automated nutrition tracking systems, which may create serious mistakes in terms of estimating daily calories intake.
+
+Compound mixed foods that are made by using numerous ingredients present a tough classification problem [3]. A burrito could also include rice, beans, meat, cheese, vegetables and sauces, all of which would form part of the total nutrition. Present food recognition systems usually group pictures of single food and cannot work with composite dishes in which several parts should be recognized and their size approximated. Others are more sophisticated and seek to identify and recognise ingredients at an ingredient level and selege them, however these methods are extremely computationally costly, and usually fail to be accurate, as well as take quite some training data in the form of dishes as whole and subdivided into components. Automated systems at present can only be used with relatively simple and single-item foods unless this multiingredent recognition issue is resolved.
+
+So far, the demands in terms of data needed to train the accurate deep learning models are challenging [1], [4]. Although transfer learning reduces how much data of foods specific to a foods training is required, creating systems that identify hundreds of types of foods with high accuracy still takes thousands of labeled images per category. It is time consuming and costly to collect, annotate and curate such large datasets. In addition, the long-tail distribution of foods implies that, although typical foods, such as pizza or hamburgers, are highly represented in available datasets, the rare or regional delicacy food is only represented in small proportions. This deficit of data on rare foods extends the fact inaccuracy gap between common and uncommon foods in recognition systems.
+
+Real-life conditions of photography give rise to a lot of problems that are not wholly encompassed by controlled dataset images [2], [11]. There are varying environment pictures when users take photos in different setups and under varying light in different locations, which include in the public or in dim restaurant rooms, which influence the appearance of the colors and textures of the images. Extremes e.g. taking photographs directly above or almost at right angles alters viewpoint and features. Plates, utensils, napkins, table surfaces, and other objects may create clutter on the background and disorient the models or hide food. The quality of the image depends on camera ability and skill of the user; the image can be blurried, over exposed, under exposed and not properly framed. Models which were trained on images of high quality and well composition usually are hard when deployed to images taken by unconstrained users unless these variations are fixed by large-scale augmentation and varied training data.
+
+These are the limitations considered in our project and occur in a way that our project is placed to make contributions within the reachable limits. Our analysis of single-item foods of the Nutrition5k dataset [9] avoids a mixed problem by working with quality nutritional ground truth. We accept the challenge of estimation of the portion size by giving the nutritional information about the usual servings and displaying the fact that this is a limitation to users. With a critical choice of models, our objective is to develop a system based on the tested architectures that can be used to illustrate the existing potential and limits of the food recognition technology [5], [6], and a thorough assessment of the system on an assortment of evaluation images. We are working towards the current research to render the use of automated nutrition tracking practical and reliable among ordinary users.
+
+\chapter{Methodology}
+
+\section{Flow Chart}
+{\textbf{Flow Chart of Food Classification and Estimation Process}}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{Flowchart (2).png}
+    \caption{Flow Chart of Food Classification and Estimation Process}
+\end{figure}
+
+
+
+\section{Dataset}
+Our food recognition and nutrition estimation system is based on the Nutrition5k dataset [9], which has been created by the researchers at Google. This professional food photography data is uniquely characterized by a combination of quality food photography and accurate amounts of nutrients, which is best suited to the work that needs to correlate food-related visual understanding to the dietary data.
+
+The N5K model Nutrition5k has been developed with an intensive approach to deterministic nutritional ground truth. Professional chefs cooked standard services of the different meals using the same recipes and that too in the same style of presentation. Every tray with prepared dishes had been photographed in various angles and perspectives in order to depict different images. After photography, the real food was identified to laboratories to be analyzed chemically to get the accurate nutritional composition of the food in terms of calories, the Macronutrients and the Micronutrients. This lab test gives nutritional data of a gold standard much more precise than a database query or an estimate, and this data forms the basis of solid machine learning training objectives.
+
+The data consists of thousands of photos of various types of foods, simple single-food ones to more complicate prepared dishes. The images are saved in the standard formats at the level of resolution that is capable of running the deep learning model without involving much downscaling or upscaling. Every picture has a metadata, such as food category and a full nutritional proposal. Nutritional data include total calories per kilocalories, protein content, fat content, carbohydrate content and other micronutrient data. Such detailed nutrition annotation makes Nutrition5k truly stand out compared to such datasets as Food101 where only food categories are offered but not the nutritional content of those foods.\pagebreak
+
+The controlled high quality imaging conditions are one of the strengths of Nutrition5k. Those foods were photographed on neutral surfaces using professional lighting systems that reduce shadows and achieve precise color of the food. Each dish is viewed in multiple angles allowing the model to adopt variety of view-invariant representation. This multi-view method implies that the photographed dish is shown under the same angle, its side and in the medium angle, so that these various perspectives are placed in training data, that is, they are expected to educate the model that these alternative views represent the same food product with the same nutrition.
+
+Nutrition5k was chosen among other databases due to some strong reasons. To begin with, its direct emphasis on diet-related information is supportive to our project objective of offering dietary knowledge that goes beyond basic food recognition. Second, the stringent methodology employed in the production of the dataset makes it easy to be sure that nutritional labels are accurate and reliable, other data sets may make use of averaged database values, which are not reflective of the specific prepared dishes of images. Third, size and diversity of the dataset present us with an appropriate balance concerning the scope of our project: it is large enough to model a serious one, yet not so massive to an extent that its training will be exceedingly time-intensive using our available computational capabilities. Fourth, controlled lighting conditions and the quality of the image of a professional give a strong starting point of the original model development, but we admit that this is a constraint of generalization to more variable real-world pictures.
+
+But we are also aware of some shortcomings of the Nutrition5k data that could influence the performance of our system in the real world. Their quality and consistency might not be in complete representation of the diversity of lighting, backgrounds and angles that the subjects will be exposed to when they take pictures of meals using their smartphones. The dataset coverage of the foods is very broad, which cannot account for all possible dishes, ways of preparation, or regional differences because our trained model will definitely face some unknown foods in practice. The sizes of portions in the dataset are normalized to be measured making it consistent in the supporting aspect but failing to consider the issue of portions variation as it occurs in real world practices. Nevertheless, within these constraints, the Nutrition5k is one of the best resources that can be used to create food recognition systems that make an estimate of the nutritional content, and any viable system will be required to advertise its operational limits to the end users.\pagebreak
+
+
+\section{Features Description}
+It is important to know the input and output properties of our system to design the model architecture correctly and to predetermine the capabilities of our system correctly. Our visionary recognition system takes in the visual input characteristics and generates categorical and nutritional output characteristics.
+
+The input characteristics are RGB food images, where each picture is expressed in the form of a three dimensional array with three color channels where the height, width, and color channels are represented by red, green and blue color channels respectively. Such images also come in different resolutions and aspect ratios as based on their origin, but can be normalized to 224x224 pixels during preprocessing so as to fit into our selected CNN architecture. The original image is made up of three color values, namely red, green, and blue, with their respective intensity values ranging between 0 to 255 in one pixel. The raw pixel values will be processed in preprocessing with normalization to give more manageable range to be processed by the neural network.
+
+The appearance properties which the CNN would be learning to identify in relation to the types of food are encoded in the visual information contained in these three RGB channels. Color data is used to make the difference between foods of unique colors which include the orange carrots and the green broccoli. Patterns of texture recorded at a series of pixels can tell whether a food is smooth such as yogurt, grainy such as rice or fibrous such as meat. The information of shape and structure coded in the spatial form of various-colored regions is used to recognize foods with typical form such as round fruit, long vegetable, or geometrically cut food. There are also contextual details such as plates, bowls, utensils and backgrounds that are present in these pictures and the model should learn to concentrate on the food and not be distracted by such irrelevance features.
+
+The categorical output feature corresponds to the predicted type of food, that is, what type of the Nutrition5k of the various typologies the model thinks that the input image represents. This prediction is in the form of a probability distribution of all possible classes of foods with each class having a probability value between 0 and 1 and the sum of all these probability values is 1. The most likely type of class is chosen as the predicted type of food. In addition to the predicted class, the model has a score known as confidence coupled with the predicted result meaning how confident the prediction is, the higher the score the more confident to be and the lower the score the more uncertain the model is or the input fed in to it is. The information related to this confidence can be useful in the reliability of the systems that enable us to draw alertness towards instances of unconfirmed predictions to be checked by the user.
+
+The nutritional yield features are quantitative nutrition data of the forecasted foodstuff. The total energy content of food is indicated in calories, which is referred to as kilocalories (kcal), and it is the measure of concern among most users when it comes to weight management. Proteins are expressed in grams, and it shows the protein level of this vital macronutrient, which is necessary to build muscle and perform many other functions in the body. The quantity of fat in grams is also known as total fats which consist of saturated, unsaturated, and trans fats, which is important to those users who keep track of cardiovascular health. The grams of carbohydrates show the level of this main source of energy especially those who have diabetes or that of a particular diet. These are the nutritional values calculated using the standard serving sizes as used in the Nutrition5k data, and our tested system will give this standardization to customers explicitly.
+
+A good example is that we have output features that are estimated values and not measurement values. The categorical prediction can be wrong when that model wrongly recognizes the food and even the correct identifications are accompanied by implicit assumptions regarding preparation techniques and ingredients that are unlikely to be exactly appropriate to the user of a particular foodstuff. Although the nutritional values are the results of the laboratory analysis using the Nutrition5k dataset, the values represent the more standard preparations and portions that may not be the ones that the user consumed. Our user interface will opt for transparency in communication of these constraints and will entice the users to interpret the results of the system as mere estimates and use common sense to interpret the results.
+
+\section{Dataset Preprocessing}
+The process of dataset preprocessing will convert raw food images to formats optimal to the CNN training process and will increase the number of required diversity in the datasets to enhance the generalization of models. Our preprocessing pipeline is a number of consecutive operations that normalize the input and enrich the documents of training.
+
+The first important preprocessing operation to perform is image resizing, which will bring all the images to the size to which our preferred CNN architecture is to be fed. The input size of EfficientNet [6] in its base version is usually 224x224 pixels, whereas ResNet models [5] usually accept the same dimensions. Images contained in the Nutrition5k dataset can be of different original resolutions and thus downsampling or upsampling has to be made to achieve the desired size. Bilinear interpolation will be employed to resize the images, as it strikes a proper balance between quality image and effectively on analysis efficiency. With aspect ratios, we would want to be very careful; we will scale down images without changing the aspect~ratio and then crop out the remaining small section to the desired square size, so that we accept the loss of a small amount of information at the edges instead of resizing food shapes by using non-uniform scale maps.
+
+Normalization is used to adjust pixel intensity values to that which is easy to train a neural network. We shall apply two normalization steps, the first, which is the transformation of raw pixel values, originally in the 0-255 integer domain to 0-1 floating-point values, by merely dividing the raw pixel values by 255. This elementary scaling prevents immensely huge values of activation which may lead to numerical instability in the course of training. Second, ImageNet standardization will be used by subtracting the ImageNet dataset mean and dividing it by each standard deviation of each color channel individually. This normalization is on a channel basis; this supplies our food images with the distribution the pre-trained models have been trained on, and transfer learning can become more effective with this. These are the values of mean and standard deviation, which are documented well and of which the model makers will ensure.
+
+Data augmentation is a form of artificial diversity, which is realized by randomly transforming images in training, enabling the model to learn features that are resilient to the fact that food could be photographed in many different ways. Random rotations of a range of +-15 degrees mimic the positions of a camera when the user is taking a picture of food, which the model is learning to accept the fact that a plate skewed a bit has the same food. Horizontal flips are used to form mirror images and to enlarge the effective size of the training set, but retain the identity of the food as most food items resemble their mirror images when flipped horizontally. The use of random zoom operations at magnification of 10-20 percent represents among the various distance of the camera and the food, and assists the model in identifying variety of items being photographed in parties close-up or at a distance. Brightness changes applied randomly in the images change the intensity of the image up and down in acceptable limits to take into consideration the various lighting conditions in dark restaurants to in broad daylight.
+
+The augmentation methods fulfil a particular aim of preventing overfitting and enhancing generalization. In the absence of augmentation a CNN can train to remember particular image templates of elements within the training set as opposed to learning generic attributes of food and it so performs poorly on novel images with different angles, lighting or framing than those. When we set the model through the augmented variations in training we push the model to learn to pay attention to the invariant features that virtually give the model the ability to recognize every type of food despite its surface-level changes. However, when preparing augmentation it is essential to apply them randomly through training as opposed to generating all possible augmented versions because every possible augmentation is almost infinitely many and the model will memorize the augmented images.
+
+Data integrity is taken care of before training commences with quality control mechanisms. To avoid corrupt image files that cannot be decoded or loaded properly in training, we will impose checks that will exclude such types of files and ensure that no bad data interrupts training. Duplicate detection shall be used to separate all images that are seen more than one time in the dataset as either either matching exactly or being similar. We will check the presence of nutritional labels to all of the pictures and make sure that they include valid numerical values with reasonable ranges. Images, which have no metadata or which have the blatant errors in labeling, will be encircled to be reviewed or removed. Although these quality control actions take time in the beginning, they save time when they come into trouble later when it is frustrating to debug a training error when one does not know where it might be related to bad data.
+
+The preprocessing pipeline will also be activated in the form of reusable component or combination of functions which can be repeatedly used on training, validation and test data. It is however important to mention that data augmentation must not be used at validation or testing, but only at training. One must leave resizing and normalization to validation and test images, but one needs to make sure that performance measures are taken in consideration of how the model can work with real images and not artificially amplified ones. Such a difference between training-time and inference-time preprocessing is important to achieve honest estimates of performance.
+
+\section{Training, Split of the Dataset: Validation and Test.}
+Appropriate subdivision of our data into training, validation and test sets is the key to us developing a model that represents well to new, unseen food images and also it enables us to make reasonable decisions in the development process and it will also provide us with a good performance estimate.
+
+We will divide Nutrition5k dataset with 70-15-15 balance where 70 percent of images will be provided to the training set, 15 percent to the validation set and 15 percent to the test set. The training set is the real data used in the teaching of the model to identify patterns of food by updating the weight by means of backpropagation. These images are presented to the model repeatedly a number of times over training epochs whereby the model slowly changes its internal parameters to reduce prediction errors on the training examples. The excessively large proportion of training is indicative of the fact that millions of parameters in the current CNN architectures require significant data to be discriminated against to a statistically significant level, even with the use of transfer learning.
+
+Validation set is very instrumental in model development although it is not used to directly update model weights. We use model performance on validation data to check if trained pattern performance can evolve on data similar to the training set after every training epoch. Validation metrics are used to make important decisions such as when to stop training by using early stopping measures to halt training when validation performance plateaus, alteration of the learning rate by slowing down the learning rate when a plateau occurs, and the selection of hyperparameters by comparing validation performance between running a model with different hyperparameters. These decisions are made on a separate validation set to avoid overfitting to the training information and still allowing the validation to be refined. The 15 percent sample is enough to give the samples needed to generate stable validation measures but it is not too much data to be withheld by the training.
+
+The test set is opposed to the rest of the development process and is not used anywhere in the development process, it is only the final and unbiased assessment of model performance after all the decisions have been finalized on development and model is ready. This isolation is essential in getting the true performance estimates, which will determine the performance of the model in handling truly new data. When we used test data to inform any development decision, however indirectly we would run the risk of overfitting the test data and coming up with overly optimistic estimates of performance. The 15 percent test allocation is a moderate balance between the necessity of trustworthy statistical approximation and such practicality as not hiding excessive data in the training and validation.
+
+Stratified splitting: The stratification of splitting guarantees equal food category distribution in training, validation and test sets. Without stratification, random splitting can have the undesirable effect of leaving a majority or all of the instances of a certain food group in one of the subsets with little to no examples of the other subsets. To take an example, when the entire set of images of apples was placed in the training set, the model would not attempt to show its capability of recognizing apples on validation or testing, and we could not adequately evaluate the performance on that set. Stratification preserves proportional representation; suppose that 5 per cent of the total data is made of apples, then 5 per cent of the training, validation and test images will be apples. This equal proportion allows equal consideration of all types of food.
+
+The reason as to why we decided to use a 70-15-15 split is due to industry traditions and the need to balance between competing objectives in machine learning. The 70\% training percentage gives ample information towards successful transfer learning, it has been found that with fine-tuning of pre-trained models such as EfficientNet [6] and ResNet [5] that thousands and not millions of examples can yield high quality performance. The 15\% validation allocation will be adequate in terms of monitoring performance stability, whereas the 15 percent test allocation is adequate to have enough samples to make credible final evaluation metrics. Other split ratios such as 80-10-10 or 60-20-20 might be reasoned depending on the number of datasets and the complexity of the model, but 70-15-15 is a universally accepted compromise due to many years of research experience [1], [5].
+
+The separation will be done carefully so as to create reproducibility. To ensure the ability to reproduce the split in the event that we are required to restart experiments or even share our methodology with others, we will set random seed values. It will be documented what images were allocated to what subset exactly so that one can validate it and reproduce it. This form of cautiousness when it comes to tearing up methodology is necessary to achieve scientific rigor and to make sure that other researchers can trust our results, and even provide them at all.
+
+\section{Libraries}
+We are implemented on top of a well chosen ecosystem of Python libraries, each one of which is selected based on its individual abilities and functionality in machine learning processes. These tools all will offer the functionality required in each step of our project ranging between data handling to model deployment.
+
+Our deep learning infrastructure consists of TF and Keras. TensorFlow is an open-source solution created by Google that has dominated the industry in terms of creating and serving machine learning models. Keras, which is now part of the high-level API in TensorFlow, offers a simple syntax to set up neural networks in the guise of simple blocks that can be assembled into neural networks. EfficientNet [6] and ResNet [5] with their ImageNet weights will be of special use in this module since they are readily available as useful and do not require manual download and configuration of their architecture. The fact that TensorFlow is widely documented, has a vibrant community, and is being continuously updated, means that we will be able to get solutions to technical problems and enjoy the general advances in the field of deep learning technology.
+
+NumPY offers basic numerical computing support in Python, including providing high-performance array operations, mathematical operations helpful in processing image data and in processing model parameters. The basis on which images are represented using multi-dimensional arrays of pixel values is its ndarray data structure. The code conciseness and execution speed of NumPy vectorized operations means that it is now possible to iterate through all the elements in a specific array without the use of explicit looping and it is incredibly faster than before. Our preprocessing and evaluation pipelines will make use of functions of reshaping, slicing and mathematical transformation of arrays. NumPy and TensorFlow are tightly integrated, there is a free flow of data between the preprocessing process and the actual training of a model.
+
+Pandas will be useful in handling organized and tabular data; we will use this to manipulate the nutritional content related to every category of food. The Nutrition5k dataset is probably given in CSV format with nutritional information and the read csv Pandas function is used to load the information. It has Dataframe protocol that supports intuitively manipulation of nutrient records by filtering, sorting, grouping and combinations. As our predictive model uses a type of food, Pandas will allow fast access to the nutritional values of the type of food by indexing and querying. Data cleaning possibilities in the library also assist in detecting the absence of values or the anomalies in nutritional data, and its statistical functions are also helpful in the exploratory analysis of data in the first phase of the investigation of the dataset.
+
+The OpenCV ( Open Source Computer Vision Library) offers all the computer vision capabilities such as loading images, conversion of image formats, geometric transformation, and color space manipulations. OpenCV will be used to read disk images in any format, do some resizing to perform the necessary preprocessing, and maybe some more advanced transformations with augmentation in case of necessity. The enhanced C++ backbone of the library makes it fast which makes the library run thousands of images within a short time. Complementary image processing functions are provided with PIL (Python Imaging Library which is now maintained as the Pillow fork) with a more Pythonic API. PIL is good at conversion of the format and other simple image manipulations and it offers an alternative interface to activities that OpenCV can prove too complicated. The integration of both libraries means that we are able to handle any task to deal with images that may come about.
+
+Matplotlib It is the base plotting library in Python that can be used to generate a host of variety, both static, animated and interactive, visualizations. We will extensively visualize training curves that monitor how loss and accuracy change with epochs, visualize sample images and their predictions to qualitatively analyze model behavior, and develop confusion matrices to show which category of foods a model tends to confuse them with, and several charts to make up the final project report. Its pyplot interface offers available MATLAB-like plotting control commands known by many scientists, and its objectoriented API enables the ability to control every aspect of visualizations in small steps. Our visualizations can easily be included in documentation and presentations because they can be saved in various formats such as PNG, PDF and SVG.
+
+Seaborn is a further development of Matplotlib with more statistical visuals in pleasing default settings. Seaborn frequently achieves in a few function calls, what Matplotlib would need many lines of code to do on its own in order to generate polished visualizations. We will use Seaborn especially to make heatmaps of confusion matrices color-coded and display patterns at a glance, plot distributions of how accuracy is spread among the categories of food, and correlation analyses in case we want to investigate the relationships between different features. The fact that seaborn wraps around Pandas DataFrames, and its main aesthetic is quite convenient to use in visualizing to structured information, and its contemporary nature creates publication-quality visuals that add value to our project report.
+
+Although scikit-learn is largely regarded as a machine learning library, it will be utilized because of good implementations of evaluation metrics and utility functions. We will use its classification report feature to produce detailed performance reports containing precision, recall and F1-scores of each type of food. Confusion matrix visualizations use raw data that is provided by the confusion matrix function. Utility as train test split would also help in dividing the dataset in the event that we do not write our own stratified code. Its standardized API and well-documented nature combined with simplicity, has made Scikit-learn the library of choice when dealing with a standard machine learning task which is not directly oriented towards deep learning as the primary focus of TensorFlow.
+
+Our web-based user interface will be powered by Streamlit, which is selected because it enables users to transform Python scripts into interactive applications without the need to have the knowledge to develop the frontend. Conventional web applications will require familiarity with HTML, CSS, JavaScript, and frameworks, such as React or Flask, which are both time-consuming to learn and do not focus on our core concern of data science. Streamlit corresponds on these complexities permitting us to make file upload elements, show pictures and forecasts, incorporate text and markup, and construct dynamic controls with straightforward Python instructions. The framework has automatic web server management, routing, and state control what would need substantial levels of boilerplate code. The live reload that comes with the development of Streamlit allows one to create and develop the user interface quickly and the fully baked applications can be simply shared through Streamlit Cloud or deployed into a number of platforms.
+
+The other utility libraries will be used to serve the purpose of specialized needs during the project. TQDM offers beautiful progress bars on lengthy operations such as dataset preprocessing, model training, and so on, which provide a visual indication that they are making progress, and are not frozen. Both JSON and Pickle can be used to store and restore Python objects such as our nutritional mapping dictionary and can perhaps be used to store model setups or metadata. Such serialization is what gives us an assurance of the ability to save critical data structures across sessions. The OS and Path libraries support the operations in the file system such as the creation of directories, files listing, and file paths in a platform independent ways. Implementation of harmful logging with the help of Python logging module shall record significant events, warnings and errors which occur during execution but of use during the process of debugging along with audit trail of system behavior.
+
+\section{Hardware Description}
+The training of deep neural networks has a strong influence on project schedule, model complexity, and experiential potential due to the computation resources necessary to conduct this type of training. Our hardware selection implies a compromise between the performance requirement and availability.
+
+As a training platform, we will utilise Google Colab since it offers free access to a GPU, which speeds up deep learning applications much faster. Colab offers NVIDIA Tesla T4 or P100 GPUs, with either one available based on the availability, and with a significantly higher computational power as compared to training only with CPU. The T4 is priced at 16GB of RAM and 8.1 TFLP of the processing power, which is enough to train our food recognition model up to batch sizes that can be considered reasonable. The available P100 also provides 16GB of internal memory and 10.6 TFLOPS of processing power with a higher level of performance. These GPUs have thousands of dedicated cores to operate in parallel on the matrix operations found in the majority of neural network training operations and achieve a speedup of from 10-50x on neural network training based on the application.
+
+Colab is built around a full set of deep learning libraries such as TensorFlow, PyTorch, scikit-learn and popular data science packages, and is configured already. This pre-installment removes the irritating the task of finding out which versions of library packages work together, installing CUDA drivers to access a Wholesaler, and depending on dependency issues that may take hours or days to fix whenever a nearby environment is being established. The service will offer about 12-15GB of RAM which is enough to load datasets, store temporary stats, and perform preprocessing pipelines, as well as, train the models. Storage is granted by integrating with Google Drive, by which we can mount our Drive and access datasets or store model checkpoints that continue to be available even after leaving the context of a specific Colab session.
+
+Colab notebook interface has an iterative development experience that is enabled by cells that are run as experiments and runable independent of each other, allowing the exploration of a code section without necessarily re-executing an entire program. This interactive process is best suited to machine learning development when we may wish to interactively display data, or test computation steps involved in preprocessing or inspect the intermediate model outputs without having to actually train the model. Collaboration features enable one to use the same notebook as other members of the team and work either in real time or asynchronously where the changes can be viewed by all members of the group. With the introduction of GitHub in the platform, our notebooks can be versioned and we will have a history of our work, as well as have a way to revert to the past version in case of necessity.
+
+Colab, however, does possess some shortcomings that we need to take into consideration. Free accounts have about 12-hour maximum run time limits and idle sessions automatically disconnect after about less time. In our expected training period of 4-10 hours, these limits are expected to be achievable, although we are planning to checkpoint weight periodically at intervals between epochs. This is an approach of checkpointing so that in case of a disconnection of a session, we can pick up training at the last checkpoint and not at the very start. Nor is there any guarantee of getting a GPU during the times of maximum usage and sometimes sessions only get CPU resources. We will schedule our training runs on these limits, with one possible scenario being during off-peak time, the accessibility to GPUs is more satisfactory.
+
+The team members can use personal computers as a backup or alternative towards development and experiment and especially those smaller scale tests or where access to Colab is limited. When certain personal hardware is used, its specifications would preferably consist of a contemporary multi-core processor like the Intel Core i5/i7 or AMD Ryzen 5/7 and are capable of performing data preprocessing and general calculation. 8-16GB RAM would be used to load and manipulate datasets with no limitation of memory usage. In the case of a personal computer with a dedicated graphics card like NVIDIA GTX 1060 or superior with 6GB VRAM, that also can become an alternative training platform though the training time is expected to be more time-consuming than that of professional-grade graphics cards on Colab. The SSD storage would quicken the process of loading in data operations unlike using conventional hard drives and so very crucial when loading in numerous pictures during training.
+
+The estimates of training times utilizes in the planning of project schedules and allocation of resources. Using the GPU, we expect to take about 8-12 minutes per training epoch, in most cases based on the batch size and the size of the dataset, and the complexity of the model architecture. The number of epochs to full model training to convergence can be 30-50, but the training can be interrupted earlier in case of a stagnation in validation performance. On average time of training per training run works out between 4-10 hours, which is acceptable to the project timeline and session restraints of Colab. Such refinement is possible through multiple training runs to experiment with different architectures, hyperparameters, or preprocessing strategies that accumulate more time, but the rather fast single training run allows the user to quickly increase refinement.
+
+The speed at which an inference can be run in the trained model is important to the user experience of the deployed application. When the acceleration is done with GPUs, individual image predictions can be made within 20-50 milliseconds, which is almost instantaneous to human beings. The modern implementation of EfficientNet [6] and ResNet [5] can run inference times of less than 1 second per image even on CPU, which is acceptable on our web application where users are expected to process one image at a time. Such quick inference durations make our Streamlit dashboard responsive to fast feedback and interaction with the users instead of infuriating them with wait times.
+
+
+
+
+
+\chapter{Implementation}
+This chapter will detail the descriptions of the development of all iterations. The details will include all the necessary information pertaining to the development of a particular increment (Required Word Count: 2,500 to 3,500 Words). Such as:
+
+\begin{enumerate}
+    \item Adopted Methodology for each iteration
+    \item Requirements of the iterations
+    \item Design, Code, and Testing results of each iteration
+    \item Dataset Details
+    \item Data Preprocessing
+    \item Data Analysis
+    \item Utilized Techniques
+    \item Evaluation Metrics, etc.
+\end{enumerate}
+
+\chapter{Results and Discussions}
+This chapter covers the following (Required Word Count: 2,500 to 3,000 Words):
+
+\begin{enumerate}
+    \item Achieved Results
+    \item Results Analysis
+    \item Results Comparisons
+    \item Expectations, etc.
+\end{enumerate}
+
+\chapter{Conclusion}
+This chapter concludes the report (Required Word Count: 250 to 300 Words).
+
+\begin{appendices}
+\chapter{Extra Details}
+Supporting material of considerable length, lists, questionnaires, source code etc., which would interrupt the main text, should be included as appendix. Label appendices as A, B, etc.
+
+\chapter{Source Code}
+Add source code here.
+\end{appendices}
+
+\bibliography{BibFile}
+\bibliographystyle{IEEEtranN}
+\end{document}
