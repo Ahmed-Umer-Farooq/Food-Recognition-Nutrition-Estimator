@@ -32,6 +32,7 @@ food-nutrition-recognition/
 ├── notebooks/
 │   └── FYP_Updated.ipynb          # Original notebook kept for reference
 │
+├── app.py                         # Streamlit web application interface
 ├── main_efficientnet.py           # Entry point for training EfficientNetB0 model
 ├── main_resnet.py                 # Entry point for training ResNet50 model
 ├── requirements.txt
@@ -76,6 +77,11 @@ food-nutrition-recognition/
 - **To run training with the ResNet50 backbone**:
   ```bash
   python main_resnet.py
+  ```
+
+- **To run the Streamlit web application**:
+  ```bash
+  streamlit run app.py
   ```
 
 > [!NOTE]
